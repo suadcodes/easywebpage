@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ask AI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <a href="homepage.html">Home</a>
+    <a href="about.html">About Me</a>
+  </nav>
+
+  <div class="profile-section">
+    <h1>Ask Me Anything!</h1>
+    <p>Type your question below and the AI will try to answer. If it doesn't know, it will say "I'll ask Suad!"</p>
+  </div>
+
+  <div class="bio-section" style="text-align:center; margin-top:30px;">
+    <input type="text" id="q" placeholder="Type your question here" style="width:70%; padding:10px; margin-bottom:10px;">
+    <br>
+    <button onclick="askAI()" style="padding:10px 15px;">Ask</button>
+    <p id="a" style="margin-top:20px; font-weight:bold;"></p>
+  </div>
+
+  <script>
+    async function askAI() {
+      const question = document.getElementById("q").value;
+      if (!question) return;
+      
+      try {
+        const res = await fetch("https://eobxrqx5998qvih.m.pipedream.net",{ 
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question })
+        });
+        const data = await res.json();
+        document.getElementById("a").innerText = data.answer || "I'll ask Suad!";
+      } catch (err) {
+        document.getElementById("a").innerText = "I'll ask Suad!";
+        console.error(err);
+      }
+    }
+  </script>
+
+</body>
+</html>
